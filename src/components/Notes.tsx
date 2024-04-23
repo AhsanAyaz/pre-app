@@ -1,14 +1,10 @@
-import { FC } from "react";
-import { Note } from "../types";
+import { useContext } from "react";
 import StickyNote from "./StickyNote";
+import { AppContext } from "../AppContext";
 
-type NotesProps = {
-  notes: Note[]
-}
+const Notes = () => {
+  const { notes } = useContext(AppContext);
 
-const Notes: FC<NotesProps> = ({
-  notes
-}) => {
   return (
     <ul className="mx-auto place-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       {notes.map((noteItem) => {

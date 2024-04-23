@@ -6,14 +6,17 @@ import {
   Card,
   Box,
 } from "@mui/material";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Note } from "../types";
+import { AppContext } from "../AppContext";
 
 type StickyNoteItemProps = {
   note: Note;
 };
 
 const StickyNote: FC<StickyNoteItemProps> = ({ note }) => {
+  const { deleteNote, toggleStarNote } = useContext(AppContext);
+
   return (
     <Box sx={{ minWidth: 200 }}>
       <Card variant="outlined" className="max-w-sm relative">
@@ -40,7 +43,12 @@ const StickyNote: FC<StickyNoteItemProps> = ({ note }) => {
         </Typography>
       </CardContent>
       <CardActions className="flex justify-end">
-        <Button size="small">Star</Button>
+        <Button color="error" size="small" onClick={() => {
+          deleteNote(note.id)
+        }}>Delete</Button>
+        <Button size="small" onClick={() => {
+          toggleStarNote(note.id)
+        }}>Star</Button>
       </CardActions>
     </Card>
     </Box>

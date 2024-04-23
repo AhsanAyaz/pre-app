@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css'
 import Notes from './components/Notes'
 import { Note } from './types';
+import { AppContext } from './AppContext';
 
 function App() {
   const [notes, setNotes] = useState<Note[]>([
@@ -36,10 +37,37 @@ function App() {
       starred: false,
     },
   ]);
+
+  const toggleStarNote = (noteId: number) => {
+    setNotes(
+      notes.map((noteItem) => {
+        if (noteItem.id === noteId) {
+          return {
+            ...noteItem,
+            starred: !noteItem.starred
+          }
+        }
+        return noteItem;
+      })
+    )
+  }
+  
+  const deleteNote = (noteId: number) => {
+    setNotes(
+      notes.filter((noteItem) => {
+        return noteItem.id !== noteId;
+      })
+    )
+  }
+
   return (
-    <>
-      <Notes notes={notes} />
-    </>
+    <AppContext.Provider value={{
+      notes,
+      toggleStarNote,
+      deleteNote
+    }}>
+      <Notes />
+    </AppContext.Provider>
   )
 }
 
